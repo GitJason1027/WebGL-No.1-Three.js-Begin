@@ -1,8 +1,8 @@
-﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html>
 <head>
-	<script type="text/javascript" src="https://github.com/GitJason1027/WebGL-No.1-Three.js-Begin/blob/master/lib/three.js"></script>
-	<script type="text/javascript" src="https://github.com/GitJason1027/WebGL-No.1-Three.js-Begin/blob/master/lib/jquery-3.1.1.min.js"></script>
+	<script type="text/javascript" src="lib/three.js"></script>
+	<script type="text/javascript" src="lib/jquery-3.1.1.min.js"></script>
 	<script type="text/javascript" >
 	var step = 0.2;
 	var x = 3.2;
@@ -10,7 +10,7 @@
 	var z = 4;
 	
 	function init(){
-		//renderer 渲染器
+		//renderer 
 		var renderer = new THREE.WebGLRenderer({
 			canvas : document.getElementById('mainCanvas')
 		}); 
@@ -51,7 +51,6 @@
 		renderer.render(scene,camera);
 	}
 	
-	//坐标系
 	function drawAxes(scene) {
                 // x-axis
                 var xGeo = new THREE.Geometry();
@@ -87,9 +86,9 @@
 	
 	/*
 	$(document).keydown(function(){
-		if(event.keyCode==38) y = y +step;		//上
-		else if(event.keyCode==37) z = z +step;		//左
-		else if(event.keyCode==39) x = x +step;		//右
+		if(event.keyCode==38) y = y +step;		
+		else if(event.keyCode==37) z = z +step;		
+		else if(event.keyCode==39) x = x +step;		
 		else if(event.keyCode==40) alert("x="+x+'\n'+"y="+y+'\n'+"z="+z);
 		init();
 	});
@@ -100,7 +99,6 @@
 </head>
 
 <body onload="init()" id="Body">
-	<p>若页面空白，可能是导入js文件出错，我也不清楚发生了什么/滑稽</p>
 	<canvas id="mainCanvas" width="600px" height="600px" color="0x544e4c"></canvas>
 	
 </body>
