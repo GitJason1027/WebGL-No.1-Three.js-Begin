@@ -1,0 +1,106 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+	<script type="text/javascript" src="../lib/three.js"></script>
+	<script type="text/javascript" src="../lib/jquery-3.1.1.min.js"></script>
+	<script type="text/javascript" >
+	var step = 0.2;
+	var x = 3.2;
+	var y =7.8;
+	var z = 4;
+	
+	function init(){
+		//renderer 
+		var renderer = new THREE.WebGLRenderer({
+			canvas : document.getElementById('mainCanvas')
+		}); 
+		renderer.setClearColor(0x969190);
+		// scene
+		var scene = new THREE.Scene();
+		drawAxes(scene);
+		// camera
+		var camera = new  THREE.OrthographicCamera(-5,5,4,-4,1,100);
+		
+		camera.position.set(25,8,25);
+		camera.lookAt(new THREE.Vector3(0,0,0));
+		scene.add(camera);
+		// a cube in the scene
+		var materials = new THREE.MeshLambertMaterial({
+			color:0x838180,
+			wireframe:false
+		});
+		var cube = new THREE.Mesh(new THREE.CubeGeometry(4,1.6,2,2,2,3),materials);
+		var torus1 = new THREE.Mesh(new THREE.TorusGeometry(0.3, 0.15, 12, 18), materials);
+		var torus2 = new THREE.Mesh(new THREE.TorusGeometry(0.3, 0.15, 12, 18), materials);
+		var torus3 = new THREE.Mesh(new THREE.TorusGeometry(0.3, 0.15, 12, 18), materials);
+		var torus4 = new THREE.Mesh(new THREE.TorusGeometry(0.3, 0.15, 12, 18), materials);
+		torus1.position.set(1.2,-0.8,1);
+		torus2.position.set(-1.2,-0.8,1);
+		torus3.position.set(1.2,-0.8,-1);
+		torus4.position.set(-1.2,-0.8,-1);
+		scene.add(cube);
+		scene.add(torus1);
+		scene.add(torus2);
+		scene.add(torus3);
+		scene.add(torus4);
+		//light 
+		var light = new THREE.PointLight(0xffffff, 2, 100);
+		light.position.set(x, y, z);
+		scene.add(light);
+		// render
+		renderer.render(scene,camera);
+	}
+	
+	function drawAxes(scene) {
+                // x-axis
+                var xGeo = new THREE.Geometry();
+                xGeo.vertices.push(new THREE.Vector3(0, 0, 0));
+                xGeo.vertices.push(new THREE.Vector3(3, 0, 0));
+                var xMat = new THREE.LineBasicMaterial({
+                    color: 0xff0000
+                });
+                var xAxis = new THREE.Line(xGeo, xMat);
+                scene.add(xAxis);
+                
+                // y-axis
+                var yGeo = new THREE.Geometry();
+                yGeo.vertices.push(new THREE.Vector3(0, 0, 0));
+                yGeo.vertices.push(new THREE.Vector3(0, 3, 0));
+                var yMat = new THREE.LineBasicMaterial({
+                    color: 0x00ff00
+                });
+                var yAxis = new THREE.Line(yGeo, yMat);
+                scene.add(yAxis);
+                
+                // z-axis
+                var zGeo = new THREE.Geometry();
+                zGeo.vertices.push(new THREE.Vector3(0, 0, 0));
+                zGeo.vertices.push(new THREE.Vector3(0, 0, 3));
+                var zMat = new THREE.LineBasicMaterial({
+                    color: 0x00ccff
+                });
+                var zAxis = new THREE.Line(zGeo, zMat);
+                scene.add(zAxis);
+            }
+	
+	
+	/*
+	$(document).keydown(function(){
+		if(event.keyCode==38) y = y +step;		
+		else if(event.keyCode==37) z = z +step;		
+		else if(event.keyCode==39) x = x +step;		
+		else if(event.keyCode==40) alert("x="+x+'\n'+"y="+y+'\n'+"z="+z);
+		init();
+	});
+	*/
+	
+	
+	</script>
+</head>
+
+<body onload="init()" id="Body">
+	<canvas id="mainCanvas" width="600px" height="600px" color="0x544e4c"></canvas>
+	
+</body>
+
+</html>
