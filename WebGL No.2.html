@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <script type="text/javascript" src="../lib/three.js"></script>
+        <script src="../lib/RequestAnimationFrame.js"></script>
+	    <script type="text/javascript" >
+
+            var C1 = null;
+            var C2 = null;
+            var C3 = null;
+            var renderer = null;
+            var scene =null ;
+            var camera = null;
+            var speed1 = 0.01;
+            var speed2 = 0.02;
+
+         function init() {
+             //renderer
+
+             renderer = new THREE.WebGLRenderer({
+                 canvas: document.getElementById('mainCanvas'),
+                 antialias: true
+             });
+             renderer.shadowMapEnabled = true;
+             renderer.shadowMapSoft = true;
+             renderer.setClearColor(0x666666);
+
+             //scene
+             scene = new THREE.Scene();
+
+             //camera
+             camera = new THREE.OrthographicCamera(-5, 5, 4, -4, 1, 100);
+             camera.position.set(5, 5, 5);
+             camera.lookAt(new THREE.Vector3(0, 0, 0));
+             scene.add(camera);
+             //object
+
+             //Cube1
+             var texture = THREE.ImageUtils.loadTexture('../img/hj.jpg', {}, function () {
+                 renderer.render(scene, camera);
+             });
+             var material = new THREE.MeshLambertMaterial({
+                 map: texture
+                 //specular: 0xFFB900
+             });
+             var geometry1 = new THREE.CubeGeometry(2, 2, 2);
+             var cube = new THREE.Mesh(geometry1, material);
+             cube.castShadow = true;
+             scene.add(cube);
+             //Cube2
+             var geometry2 = new THREE.CubeGeometry(1, 1, 1);
+             var cube2 = new THREE.Mesh(geometry2, material);
+             cube2.castShadow = true;
+             cube2.position.set(1, 1, 0);
+             cube2.rotation.z = -Math.PI / 4;
+             scene.add(cube2);
+
+              //Cube3
+             var geometry3 = new THREE.CubeGeometry(1, 1, 1);
+             var cube3 = new THREE.Mesh(geometry3, material);
+             cube3.castShadow = true;
+             cube3.position.set(1, -0.5, 0);
+             scene.add(cube3);
+
+             //line
+             var lineGeo = new THREE.Geometry();
+             lineGeo.vertices.push(new THREE.Vector3(-3, 0, 0));
+             lineGeo.vertices.push(new THREE.Vector3(3, 0, 0));
+             var lineMat = new THREE.LineBasicMaterial({
+                 color: 0xff0000
+             });
+             var Line = new THREE.Line(lineGeo, lineMat);
+             Line.position.set(0,-0.5,0);
+             scene.add(Line);
+             //circle
+             var circle = new THREE.CircleGeometry(3,50);
+             var materialC = new THREE.LineBasicMaterial({color: 0xffffff});
+             C1 = new THREE.Line(circle,materialC);
+             C2 = new THREE.Line(circle,materialC);
+             
+             C1.position.set(0,-0.5,0);
+             C1.rotation.z = -Math.PI/2;
+             C2.position.set(0,-0.5,0);
+             C2.rotation.z = -Math.PI/2;
+             C2.rotation.y = -Math.PI/2;
+             scene.add(C1);
+             scene.add(C2);
+
+             var circle3 = new THREE.CircleGeometry(3,50);
+             C3 = new THREE.Line(circle3,materialC);
+             C3.position.set(0,-0.5,0);
+             C3.rotation.x = -Math.PI/2;
+             C3.rotation.z = Math.PI*3/4;
+             scene.add(C3);
+
+             //plane
+             var plane = new THREE.Mesh(new THREE.PlaneGeometry(8, 13, 16, 16),
+                        new THREE.MeshLambertMaterial({ color: 0xA0D283, ambient: 0xff0000 }));
+
+             plane.rotation.x = -Math.PI / 2;
+             plane.position.y = -1;
+             plane.receiveShadow = true;
+             scene.add(plane);
+
+             //light
+             var light = new THREE.DirectionalLight(0xffffff, 1, 100, Math.PI / 3, 25);
+             light.position.set(0, 3, 2);
+             light.target = cube;
+             light.castShadow = true;
+
+             light.shadowCameraNear = 2;
+             light.shadowCameraFar = 10;
+             light.shadowCameraFov = 30;
+             light.shadowCameraVisible = true;
+
+             light.shadowMapWidth = 1024;
+             light.shadowMapHeight = 1024;
+             light.shadowDarkness = 0.3;
+
+             light.castShadow = true;
+             scene.add(light);
+
+             run();
+         }
+
+         function run()
+	    {
+		    renderer.render( scene, camera );
+            //speed1 += 0.01; 
+            //speed2 += 0.02;
+			C1.rotation.x += speed1;
+            C1.rotation.y += speed1;
+			C2.rotation.y += speed2;
+            C3.rotation.z += 0.02;
+    	    requestAnimationFrame(run);	
+	    }
+
+        </script>
+    </head>
+    <body onload="init()" >
+        <center>
+        <canvas id="mainCanvas" width="800px" height="600px" color="0x9FB277"></canvas>
+        </center>
+    </body>
+    
+</html>
